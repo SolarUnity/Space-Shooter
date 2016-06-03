@@ -24,12 +24,18 @@ public class DestroyByContact : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Boundary")
+        //if (other.tag == "Boundary" || other.tag == "Enemy")
+        if (other.CompareTag( "Boundary") || other.CompareTag("Enemy"))
         {
             return;
         }
-        Instantiate(explosion, transform.position, transform.rotation);
-        if (other.tag == "Player")
+        //除非存在需要爆炸的东西，否则不触发效果
+        if (explosion != null){
+        
+            Instantiate(explosion, transform.position, transform.rotation);
+        }
+        //如果击中了玩家，在玩家区域爆炸
+        if (other.CompareTag("Player"))
         {
             Instantiate(playerExplosion, other.transform.position, other.transform.rotation);
             gameController.GameOver();

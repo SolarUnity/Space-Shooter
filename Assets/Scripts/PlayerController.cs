@@ -47,6 +47,6 @@ public class PlayerController : MonoBehaviour {
         //控制不要飞出边界
         rb.position = new Vector3(Mathf.Clamp(rb.position.x, boundary.xMin, boundary.xMax), 0.0f, Mathf.Clamp(rb.position.z, boundary.zMin, boundary.zMax));
         //控制飞行翻转
-        rb.rotation = Quaternion.Euler(0, 0, rb.velocity.x * tilt);
+        rb.rotation = Quaternion.Euler(0, 0, rb.velocity.x * -tilt);
     }
 }
