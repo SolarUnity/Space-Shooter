@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour {
     public Boundary boundary;
     public float fireRate;
     public GameObject shot;
-    public Transform shotSpawn;
+    public Transform [] shotSpawns;
 
     private float nextFire;
     private Rigidbody rb;
@@ -32,7 +32,11 @@ public class PlayerController : MonoBehaviour {
         {
             nextFire = Time.time + fireRate;
             //在射击生成的地方，生成一个shot实例
-            GameObject clone = Instantiate(shot, shotSpawn.position, shotSpawn.rotation) as GameObject;
+            for (int i = 0; i < shotSpawns.Length; i++)
+            {
+                Transform shotSpawn = shotSpawns[i];
+                GameObject clone = Instantiate(shot, shotSpawn.position, shotSpawn.rotation) as GameObject;
+            }
             audio.Play();
         }
     }
