@@ -29,10 +29,13 @@ public class EvasiveManeuver : MonoBehaviour {
     private float targetManeuver;
     //移动速度
     private float currentSpeed;
+    //主角的位置
+    private Transform playerTransform;
 
     // Use this for initialization
     void Start () {
         rb = GetComponent<Rigidbody>();
+        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         currentSpeed = rb.velocity.z;
         StartCoroutine(Evade());
 	}
@@ -42,8 +45,18 @@ public class EvasiveManeuver : MonoBehaviour {
         yield return new WaitForSeconds(Random.Range(startWait.x, startWait.y));
         while (true)
         {
-            //用于校准当前敌军飞船的位置 即-6 -> 6
-            targetManeuver = Random.Range(1,dodge) * -Mathf.Sign(transform.position.x);
+            bool flag = Random.Range(0, 1) > 0.5f;
+            if (playerTransform == null || flag)
+            {
+                //用于随机生成当前敌军飞船的位置 即-6 -> 6
+                targetManeuver = Random.Range(1, dodge) * -Mathf.Sign(transform.position.x);
+            }
+            else
+            {
+                //或者更狠一点，直接奔主角飞过来,这种叫做精英怪
+                targetManeuver = playerTransform.position.x;
+            }
+            
             yield return new WaitForSeconds(Random.Range(maneuverTime.x,maneuverTime.y));
             targetManeuver = 0;
             yield return new WaitForSeconds(Random.Range(maneuverWait.x,maneuverWait.y));
