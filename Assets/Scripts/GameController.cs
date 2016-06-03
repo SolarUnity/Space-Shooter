@@ -14,7 +14,7 @@ public class GameController : MonoBehaviour {
     public int score;
 
     //生成的对象
-    public GameObject hazard;
+    public GameObject[] hazards;
     //生成的基准坐标
     public Vector3 spawnValues;
     //生成的陨石数量
@@ -90,6 +90,7 @@ public class GameController : MonoBehaviour {
             //每一波的数量
             for (int i = 0; i < hazardCount; i++)
             {
+                GameObject hazard = hazards[Random.Range(0,hazards.Length)];
                 //生成坐标
                 Vector3 spawnPosition = new Vector3(Random.Range(-spawnValues.x, spawnValues.x), spawnValues.y, spawnValues.z);
                 //旋转角度
