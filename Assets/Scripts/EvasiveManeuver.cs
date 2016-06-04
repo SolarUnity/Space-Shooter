@@ -35,7 +35,10 @@ public class EvasiveManeuver : MonoBehaviour {
     // Use this for initialization
     void Start () {
         rb = GetComponent<Rigidbody>();
-        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+		GameObject gameObject = GameObject.FindGameObjectWithTag ("Player");
+		if(gameObject!=null){
+			playerTransform = gameObject.transform;
+		}
         currentSpeed = rb.velocity.z;
         StartCoroutine(Evade());
 	}

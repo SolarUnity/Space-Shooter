@@ -10,6 +10,9 @@ public class GameController : MonoBehaviour {
     public Text restartText;
     //游戏结束
     public Text gameOverText;
+	//重新开始按钮
+	public GameObject restartButton;
+
     //当前分数
     public int score;
 
@@ -45,12 +48,14 @@ public class GameController : MonoBehaviour {
         restart = false;
         restartText.text = "";
         gameOverText.text = "";
+		restartButton.SetActive (false);
         score = 0;
         UpdateScore();
         startCount = hazardCount;
         StartCoroutine(SpawnWaves());
     }
 
+	//如果发现Restart可以被触发，监听R键操作
     void Update()
     {
         if (restart)
@@ -62,22 +67,27 @@ public class GameController : MonoBehaviour {
             }
         }
     }
-
-
+	//得分
     public void AddScore(int newScoreValue)
     {
         score += newScoreValue;
         UpdateScore();
     }
 
+	//游戏结束时被外部触发，显示UI，变更状态
     public void GameOver()
     {
         gameOver = true;
-
+		restartButton.SetActive (true);
         restart = true;
         gameOverText.text = "Game Over!";
-        restartText.text = "Press 'R' for Restart";
+		restartText.text = "Press 'R' Or Restart Button for Restart";
     }
+
+	//重新开始按钮被触发
+	public void RestartGame(){
+		Application.LoadLevel(Application.loadedLevel);
+	}
 
     //生成陨石流
     IEnumerator SpawnWaves()
